@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Health Copilot"
+description = "A responsive personal health companion frontend with demo wellness metrics, health report uploads, and an English/Telugu AI assistant interface. Demo-only and not for medical diagnosis."
+version = "1.0.0"
+id = "artifacts/health-copilot"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21234
+
+[services.development]
+run = "pnpm --filter @workspace/health-copilot run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/health-copilot", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/health-copilot/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21234"
+BASE_PATH = "/"
